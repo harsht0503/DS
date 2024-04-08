@@ -1,0 +1,218 @@
+Pratical no-1
+write a program to demonstrate bitwise operation
+Program :
+
+
+ 
+
+a = 60
+b= 13
+c=0
+
+c=a& b;
+
+print ("Line 1 - Value of c is ", c)
+c=a l b;
+
+print ("Line 2 - Value of c is ", c)
+c=a ^ b;
+
+print ("Line 3 - Value of c is ", c)
+c= ~a;
+
+print ("Line 4 - Value of c is ", c)
+c=a << 2;
+
+print ("Line 5 - Value of c is ", c)
+c=a>>2;
+
+print ("Line 6 - Value of c is ", c)
+
+------------------------------------------------------------------------------------------------------
+
+Pratical no-2
+write a program for pre-processing of a text document :stop word removal
+Program :
+
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+example sent="This is a sample sentence, showing off the stop words filtration."
+stop_words=set (stopwords.words('english'))
+word_tokens=word_tokenize(example_ sent)
+filtered_sentence=[w for w in word_tokens if not w in
+stop_words]
+filtered_sentence=[]
+for w in word_tokens:
+
+    if w not in stop_words:
+
+        filtered_sentence. append (w)
+
+print (word_tokens)
+print (filtered_sentence)
+
+--------------------------------------------------------------------------------------------------------------
+
+Pratical no-3
+implement dynamic programming algorithm for computing the edit distance between s1 and s2 (levenshetin distance)
+Program :
+
+ 
+
+import numpy as np
+def levenshtein(s1,s2):
+    size_x=len(s1)+1
+    size_y=len(s2)+1
+    matrix=np.zeros((size_x, size_y))
+    for x in range(size_x):
+	matrix[x,0]=x
+    for y in range(size_y):
+        matrix[0,y]=y
+
+    for x in range(1,size_x):
+	for y in range(1,size_y):
+	    if sl1[x-1]==s2[y-1]:
+		matrix[x, y]=min(matrix[x-l,y]+1l, matrix[x-1l,y-1], matrix[x, y-1]+1)
+	    else:
+		matrix[x, y]=min(matrix[x-1,y]+1l, matrix[x-l,y-1]+1, matrix[x,y-1]+1)
+    print (matrix)
+    return(matrix[size_x-1, size_y-1])
+levenshtein("Hello", "Hello")
+
+ 
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Pratical no-4
+write a program to compute similarity between two text documents
+Program :
+
+
+import nltk
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+from nltk.corpus import stopwords
+
+from nltk.tokenize import word_tokenize
+import numpy as np
+
+def process (file):
+    raw = open(file) .read()
+    tokens = word_tokenize (raw)
+    words = [w.lower() for w in tokens]
+    porter = nltk.PorterStemmer ()
+    stemmed_tokens = [porter.stem(t) for t in words]
+    stop_words = set (stopwords.words('english'))
+    filtered_tokens = [w for w in stemmed_tokens if not w in stop_words]
+    count = nltk.defaultdict (int)
+    for word in filtered_tokens:
+	count [word] += 1
+    return count
+
+def cos_sim(a, b):
+   dot_product = np.dot(a, b)
+   norm_a = np.linalg.norm(a)
+   norm_b = np.linalg.norm(b)
+   return dot_product / (norm_a * norm_b)
+
+def getSimilarity(dictl, dict2):
+    all_words_ list = []
+    for key in dictl:
+	all_words_ list.append (key)
+    for key in dict2:
+	all_words_list.append (key)
+    all_words_list_size = len(all_words_list)
+    vl = np.zeros(all_words_list_size, dtype=int)
+    v2 = np.zeros(all_words_list_size, dtype=int)
+    i=0
+    for key in all_words_ list:
+	vi[i] = dictl.get(key, 0)
+	v2[i] = dict2.get(key, 0)
+	it=l
+    return cos_sim(vl, v2)
+
+if __name__== ' main _':
+
+   dictl = process ("Textl .txt")
+   dict2 = process ("Text2.txt")
+   print("similarity between two text documents:",getSimilarity(dict1,dict2))
+
+ 
+---------------------------------------------------------------------------------------------------
+ 
+
+ 
+Pratical no- 5
+write a program to implement simple web crawler 
+Program :
+
+import requests
+from bs4 import BeautifulSoup
+def web(page, WebUrl):
+    if (page>0):
+   	print ("Hi")
+	url = WebUrl
+	code = requests.get (url)
+	plain = code.text
+	s = BeautifulSoup(plain, "html.parser")
+	for link in s.findAll('a', {'class' : 's-access-detail-page'}):
+	    tet = link.get('title')
+	    print (tet)
+	    tet2 = link.get('href')
+	    print (tet2)
+web(1, 'https://www.amazon.in/Redmi-Midnight-Black-256GB-Storage/dp/BOCRQFR6F4')
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Pratical no- 6
+write a program to parse Xml text generate web graph and compute topic specific page 
+Program :
+
+import csv
+import requests
+import xml.etree.ElementTree as ET
+
+def loadRSS():
+    url="http://www.hindustantimes.com/rss/topnews/rssfeed.xml'
+    resp=requests.get (url)
+    with open('topnewsfeed.xml', 'wb') as f:
+	f.write(resp.content)
+def parseXML(xmlfile):
+    tree=ET.parse (xmlfile)
+    root=tree.getroot ()
+    newsitems=[]
+
+    for item in root.findall('./channel/item'):
+        news={}
+
+        for child in ite
+
+	    if child.tag=='{http://search.yahoo.com/mrss/}content':
+		 news['media']=child.attrib['url']
+
+  	    else:
+		news[child.tag]=child.text.encode('utf8')
+		newsitems.append (news)
+    return newsitems
+def savetoCSV(newsitems, filename):
+    fields=['guid','title',pubDate','description','link','media'] 
+    with open(filename, 'w') as csvfile:
+         writer=csv.DictWriter(csvfile, fieldnames=fields)
+   	 writer.writeheader ()
+    	 writer.writerows (newsitems)
+
+loadRSSs ()
+newsitems=parseXML ('topnewsfeed.xml')
+savetoCSV(newsitems, 'topnews.csv')
+def generate_edges (graph) :
+    edges = []
+    for node in graph:
+        for neighbour in graph[node]:
+            edges.append((node, neighbour) )
+    return edges
+
+ 
+

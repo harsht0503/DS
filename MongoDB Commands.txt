@@ -1,0 +1,119 @@
+1. How to open MongoDB?
+Path: C:/Program Files/MongoDB/Server/4.2/bin
+In 'bin' folder -> right click on 'mongo' application and select option 'Run as Administrator'.
+
+
+2. Type following command in 'mongo' application.
+
+
+3. MongoDB Check Current database:
+db
+
+
+4. MongoDB Display list of databases:
+show dbs
+
+
+5. MongoDB Create database:
+use tycs
+
+
+6. MongoDB Create collection:
+db.createCollection(tycs)
+	OR
+db.tycs.insert({no:1, name:"tycs1", grade:"O", age:20})
+
+
+7. To check whether the collection is created successfully or not
+show collections
+
+
+8. MongoDB Insert Document:
+db.tycs.insert({no:2, name:"tycs2", grade:"A", age:21})
+
+
+9. Insert Multiple Documents in collection:
+a.   var students = 
+      [
+      {no:3, name:"tycs3", grade:"B", age:20},
+      {no:4, name:"tycs4", grade:"O", age:19},
+      {no:5, name:"tycs5", grade:"A", age:21},
+      ];
+
+b.   db.tycs.insert(students);
+
+
+10. MongoDB Query Document: "find()" 
+db.tycs.find()
+	OR
+db.tycs.find().forEach(printjson);
+	OR
+db.tycs.find().pretty()
+
+
+11. MongoDB Query Document: "Based on Criteria" -> Equality Criteria:
+db.tycs.find({name:"tycs3"}).pretty()
+	OR
+db.tycs.find({grade:"A"}).pretty()
+
+
+12. MongoDB Query Document: "Based on Criteria" -> Greater than Criteria:
+db.tycs.find({"age":{$gt:20}}).pretty()
+	OR
+db.tycs.find({"no":{$gt:3}}).pretty()
+
+
+13. MongoDB Query Document: "Based on Criteria" -> Less than Criteria:
+db.tycs.find({"age":{$lt:20}}).pretty()
+	OR
+db.tycs.find({"no":{$lt:3}}).pretty()
+
+
+14. MongoDB Query Document: "Based on Criteria" -> Not Equals Criteria:
+db.tycs.find({"age":{$ne:21}}).pretty()
+	OR
+db.tycs.find({"no":{$ne:4}}).pretty()
+
+
+15. MongoDB Update Document:
+a.   db.tycs.update({"name":"tycs1"},{$set:{"name":"BNB"}})
+b.   db.tycs.find().pretty()
+
+
+16. MongoDB Projection:
+db.tycs.find({},{"_id":0, "no":1})
+
+
+17. limit() method in MongoDB:
+db.tycs.find().limit(1).pretty()
+
+
+18. skip() method in MongoDB:
+db.tycs.find().limit(1).skip(1).pretty()
+
+
+19. Sorting of Documents in MongoDB:
+(Note ---> 1 is for ascending order and -1 is for descending order. The default value is 1.)
+
+a.   db.tycs.find({}, {"age":1, "_id":0}).sort({"age":1})
+b.   db.tycs.find({}, {"age":1, "_id":0}).sort({"age": -1})
+
+
+20. Delete document in MongoDB: Remove Specific Document
+a.   db.tycs.remove({"no":2})
+b.   db.tycs.find().pretty()
+
+
+21. Remove all the documents from a collection but does not want to remove the collection itself :
+db.tycs.remove({})
+
+
+22. MongoDB Drop collection:
+a.   db.tycs.drop()
+b.   show collecions
+
+
+23. MongoDB Drop Database:
+a.   db.dropDatabase()
+b.   show dbs
+
